@@ -1,0 +1,63 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Projekt.Models;
+
+namespace Projekt.Controllers
+{
+    public class CategoriesController : Controller
+    {
+        [Authorize(Policy = "Admin")]
+        public IActionResult Index()
+        {
+            var categories = CategoriesRepository.GetCategories();
+            return View(categories);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            ViewBag.Action = "edit";
+
+            var category = CategoriesRepository.GetCategoryById(id.HasValue?id.Value:0);
+            return View(category);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                CategoriesRepository.UpdateCategory(category.Id, category);
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.Action = "edit";
+            return View(category);
+        }
+
+        public IActionResult Add()
+        {
+            ViewBag.Action = "add";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add([FromForm]Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                CategoriesRepository.AddCategory(category);
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.Action = "add";
+            return View(category);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            CategoriesRepository.DeleteCategory(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+    }
+}

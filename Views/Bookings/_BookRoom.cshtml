@@ -1,0 +1,11 @@
+﻿@model Room
+@using WebApp.Models
+
+<div class="form-group">
+    <label asp-for="Name"></label>
+    <input type="text" class="form-control" asp-for="Name" readonly/>
+</div>
+<div class="form-group">
+    <label asp-for="Price"></label>
+    <input type="text" id="Price" class="form-control" value="@(string.Format("{0:c}", @Model.Price))" readonly />
+</div>

@@ -1,0 +1,11 @@
+﻿@model RoomViewModel
+@{
+    ViewData["Title"] = "Edit room";
+}
+
+<h1>Edit room</h1>
+
+@if (Model != null)
+{
+    <partial name="_Room" model="@Model" />
+}

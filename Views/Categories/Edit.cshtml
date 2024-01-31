@@ -1,0 +1,14 @@
+﻿@model Category
+@{
+    if(Model != null)
+    {
+        ViewData["Title"] = Model.Name;
+    }
+}
+
+@if(Model != null)
+{
+    <h1>Room type: @Model.Name</h1>
+
+    <partial name="_Category" model="@Model" />
+}

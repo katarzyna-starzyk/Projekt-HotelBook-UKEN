@@ -1,0 +1,77 @@
+﻿@model RoomViewModel
+@{
+    string action = ViewBag.Action ?? string.Empty;
+}
+
+<form method="post" asp-controller="Rooms" asp-action="@action">
+
+    @if (action?.ToLower() == "edit")
+    {
+        <input type="hidden" asp-for="Room.Id" />
+    }
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label asp-for="Room.CategoryId" class="col-form-label"></label>
+        </div>
+        <div class="col-6">
+            <select asp-for="Room.CategoryId" class="form-control">
+                <option>Select option</option>
+                @if (Model.Categories != null && Model.Categories.Count() > 0)
+                {
+                    @foreach (var c in Model.Categories)
+                    {
+                        <option value="@c.Id">@c.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col">
+            <span class="text-danger" asp-validation-for="Room.CategoryId"></span>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label asp-for="Room.Name" class="col-form-label"></label>
+        </div>
+        <div class="col-6">
+            <input type="text" asp-for="Room.Name" class="form-control" />
+        </div>
+        <div class="col">
+            <span class="text-danger" asp-validation-for="Room.Name"></span>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label asp-for="Room.Price" class="col-form-label"></label>
+        </div>
+        <div class="col-6">
+            <input type="number" asp-for="Room.Price" class="form-control" min="0" step="any" />
+        </div>
+        <div class="col">
+            <span class="text-danger" asp-validation-for="Room.Price"></span>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label asp-for="Room.Quantity" class="col-form-label"></label>
+        </div>
+        <div class="col-6">
+            <input type="number" asp-for="Room.Quantity" class="form-control" min="1" />
+        </div>
+        <div class="col">
+            <span class="text-danger" asp-validation-for="Room.Quantity"></span>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <input type="submit" class="btn btn-primary" value="Save" />
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+
+</form>

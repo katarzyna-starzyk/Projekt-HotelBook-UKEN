@@ -1,0 +1,84 @@
+﻿@model BookingViewModel
+@{
+    ViewData["Title"] = "Booking";
+}
+
+<div class="row">
+    <div class="col-7"><h1>Book a room</h1></div>
+    <div class="col-2"><label for="user">Username: </label></div>
+    <div class="col-3">@*Username*@</div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-4">
+
+        <select asp-for="SelectedCategoryId" class="form-control">
+            <option>Select option</option>
+            @if (Model.Categories != null && Model.Categories.Count() > 0)
+            {
+                @foreach (var c in Model.Categories)
+                {
+                    <option value="@c.Id">@c.Name</option>
+                }
+            }
+        </select>
+
+        <br />
+
+        <div id="roomsPartial"></div>
+
+        <br />
+
+        <div id="roomDetailPartial"></div>
+
+        <form method="post" asp-controller="bookings" asp-action="book" id="formBook">
+            <input asp-for="SelectedRoomId" type="hidden" />
+            <div class="form-group">
+                <label asp-for="QuantityToBook"></label>
+                <input type="number" asp-for="QuantityToBook" class="form-control" min="1" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Book" />
+            </div>
+        </form>
+
+    </div>
+    <div class="col">
+        @*Bookings*@
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+
+            $("#formBook").hide();
+            $("#QuantityToBook").val("");
+
+            $("#SelectedCategoryId").on("change", function ()
+            {
+                $("#roomsPartial").load("/rooms/RoomsByCategoryPartial", {categoryId: $(this).val()});
+                $("#roomDetailPartial").html("");
+                $("#formBook").hide();
+            })
+
+            $('#roomsPartial').on('click', '.room-row', function ()
+            {
+                var roomId = $(this).attr("room-id");
+                $("#roomDetailPartial").load("/bookings/BookRoomPartial", { roomId: roomId });
+            })
+
+            if (roomId > 0) {
+                $("#SelectedRoomId").val(roomId);
+                $("#formBook").show();
+            }
+            else {
+                $("#SelectedRoomId").val("");
+                $("#formBook").hide();
+            }
+            
+            
+        });
+    </script>
+}

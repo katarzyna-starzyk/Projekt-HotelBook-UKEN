@@ -1,0 +1,24 @@
+﻿@using WebApp.Models
+@model IEnumerable<Room>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Room name</th>
+                <th>Rooms left</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var room in Model)
+            {
+                <tr class="room-row" room-id="@room.Id">
+                    <td>@room.Name</td>
+                    <td>@room.Quantity</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}

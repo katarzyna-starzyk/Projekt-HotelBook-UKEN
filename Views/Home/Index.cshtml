@@ -1,0 +1,73 @@
+﻿@using Projekt.Models
+@model List<Category>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<main class="container-md bg-body-tertiary">
+
+    <h1>WELCOME ON OUR HOTEL PAGE</h1>
+
+    <div class="container-fluid">
+
+        <div id="carouselDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+                @foreach(var category in Model)
+                {
+                    @if (Model.First()==category)
+                    {
+                        <button type="button" data-bs-target="#carouselDark" data-bs-slide-to="@(category.Id-1)" class="active" aria-current="true" aria-label="Slide @category.Id"></button>
+                    }
+                    else
+                    {
+                        <button type="button" data-bs-target="#carouselDark" data-bs-slide-to="@(category.Id-1)" aria-label="Slide @category.Id"></button>
+                    }   
+                }
+            </div>
+
+            <div class="carousel-inner">
+                @foreach (var c in Model)
+                {
+                    @if (Model.First() == c)
+                    {
+                        <div class="carousel-item active">
+                            <a href="">
+                                <img src="media\photo.jpg" class="d-block w-100" alt="@c.Name">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@c.Name</h5>
+                                    <p>@c.Description</p>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item">
+                            <a href="">
+                                <img src="media\photo.jpg" class="d-block w-100" alt="@c.Name">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@c.Name</h5>
+                                    <p>@c.Description</p>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    
+                }
+
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        </div>
+    </div>
+</main>
